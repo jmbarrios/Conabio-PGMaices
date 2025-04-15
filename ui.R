@@ -11,7 +11,7 @@ library(tidyverse)
 library(markdown)
 library(plotly)
 library(httr)
-library(rgdal)
+# library(rgdal)
 library(tableHTML)
 
 
@@ -20,9 +20,9 @@ library(tableHTML)
 #  title = "Proyecto Global de  Maíces", id = "nav",
 
 
-dashboardPagePlus(
+dashboardPage(
   skin = "yellow",
-  sidebar_background = NULL,
+  # sidebar_background = NULL,
   
   ## Dashboard Header
 #  dashboardHeaderPlus(
@@ -32,10 +32,11 @@ dashboardPagePlus(
 #    fixed = TRUE
 #  ), # close dashboard header
 #  
-  dashboardHeaderPlus(
+  dashboardHeader(
     title = tagList(
       span(class = "logo-lg", img(src = "CONABIO_LOGO_14.png", width = 150)), 
-      img(src = "CONABIO_LOGO_15.png", height = 35, align = "center")),
+      img(src = "CONABIO_LOGO_15.png", height = 35, align = "center")
+      ),
   #  enable_rightsidebar = TRUE,
   #  rightSidebarIcon = "gears"
   titleWidth = 200,
@@ -75,8 +76,8 @@ dashboardPagePlus(
       menuItem("Bibliografía", 
                tabName = "conabio", 
                icon = icon("book-open")),
-      menuItem("Visualización", 
-               tabName = "autor", 
+      menuItem("Visualización",
+               tabName = "autor",
                icon = icon("user"))
     )
   ),
@@ -126,7 +127,7 @@ dashboardPagePlus(
           h4("Esta visualización esta dividida en las siguientes secciones:"),
           
                    fluidRow(
-                     boxPlus(
+                     box(
                        title = strong("Distribución de maíces"),
                        closable = FALSE,
                        width = 6,
@@ -136,12 +137,12 @@ dashboardPagePlus(
                        collapsible = FALSE,
                        h4("Visualiza los registros de las razas de maíces, así como
                        de sus parientes silvestres: teocintles y ", em("tripsacum")),
-                       userPostMedia(src = "mapDistribution.png", height = 400, width = 400),
+                       userPostMedia(image = "mapDistribution.png", height = 400, width = 400),
                        id = "mapa",
                        style = "cursor:pointer;"
                      ),
           
-                     boxPlus(
+                     box(
                        title = strong("Diversidad de maíces"),
                        closable = FALSE,
                        width = 6,
@@ -151,12 +152,14 @@ dashboardPagePlus(
                        collapsible = FALSE,
                        h4("Información general sobre cada raza de maíz, así como su distribución en los diferentes
                           estados de la república"),
-                       userPostMedia(src = "DatosMaices2.png", height = 400, width = 400),
+                       userPostMedia(image = "DatosMaices2.png", height = 400, width = 400),
                        id = "datosMaices",
                        style = "cursor:pointer;"
-                     ),
+                     )#,
+                   ),
+                    fluidRow(
           
-                     boxPlus(
+                     box(
                        title = strong("Altitud"),
                        closable = FALSE,
                        width = 6,
@@ -165,12 +168,12 @@ dashboardPagePlus(
                        solidHeader = TRUE,
                        collapsible = FALSE,
                        h4("La altitud mínima y máxima donde se tienen datos de las razas de maíces"),
-                       userPostMedia(src = "altitud1.png", height = 400, width = 400),
+                       userPostMedia(image = "altitud1.png", height = 400, width = 400),
                        id = "Altitud1",
                        style = "cursor:pointer;"
                      ),
           
-                     boxPlus(
+                     box(
                        title = strong("Tamaño de mazorca"),
                        closable = FALSE,
                        width = 6,
@@ -180,12 +183,14 @@ dashboardPagePlus(
                        collapsible = FALSE,
                        h4("Existe una gran variabilidad del tamaño de la mazorca entre las 
                           razas de maíz y dentro de las misma raza de maíz"),
-                       userPostMedia(src = "tamanoMazorca.png", height = 400, width = 400),
+                       userPostMedia(image = "tamanoMazorca.png", height = 400, width = 400),
                        id = "Mazorca",
                        style = "cursor:pointer;"
-                     ),
+                     )#,
+                    ),
+        fluidRow(
                      
-                     boxPlus(
+                     box(
                        title = strong("Gráfica de Aluvial"),
                        closable = FALSE,
                        width = 6,
@@ -194,12 +199,12 @@ dashboardPagePlus(
                        solidHeader = TRUE,
                        collapsible = FALSE,
                        h4("Otra forma de visualizar las razas de maíces de México"),
-                       userPostMedia(src = "aluvial.png", height = 300, width = 300),
+                       userPostMedia(image = "aluvial.png", height = 300, width = 300),
                        id = "Aluvial",
                        style = "cursor:pointer;"
                      ),
                      
-                     boxPlus(
+                     box(
                        title = strong("Bibliografía"),
                        closable = FALSE,
                        width = 6,
@@ -208,7 +213,7 @@ dashboardPagePlus(
                        solidHeader = TRUE,
                        collapsible = FALSE,
                        h4("La lista de documentos generados por el Proyecto Global de Maíces"),
-                       userPostMedia(src = "bibliografia.png", height = 400, width = 400),
+                       userPostMedia(image = "bibliografia.png", height = 400, width = 400),
                        id = "Bibliografia",
                        style = "cursor:pointer;"
                      )
@@ -294,32 +299,35 @@ dashboardPagePlus(
          # h4("Razas de maíces"),
           
            fluidPage(
-             boxPlus(
+             box(
                width = 12,
                title = "Razas de maíces", 
                closable = FALSE, 
                status = "warning",
                solidHeader = TRUE, 
                collapsible = FALSE,
-               enable_sidebar = TRUE,
-               sidebar_width = 30,
-               sidebar_start_open = TRUE,
-               sidebar_content = tagList(
-                 selectInput(
-                 inputId = "Raza_Primaria",
-                 label = h4(strong("Raza de maíz:")),
-                 levels(as.factor(TableL1c$Raza_Primaria))
-                            ),
-                 h4("Características generales:"),
-                 h5(textOutput("summary1")),
-                 h5(
-                   "Fuente:",
-                   tags$a(href = "https://www.biodiversidad.gob.mx/diversidad/alimentos/maices/razas-de-maiz", "Maíces")
-                 )
-                                        ),
+               sidebar = boxSidebar(
+                   startOpen=TRUE,
+                   width=30,
+                   tagList(
+                          selectInput(
+                          inputId = "Raza_Primaria",
+                          label = h4(strong("Raza de maíz:")),
+                          levels(as.factor(TableL1c$Raza_Primaria))
+                                     ),
+                          h4("Características generales:"),
+                          h5(textOutput("summary1")),
+                          h5(
+                            "Fuente:",
+                            tags$a(href = "https://www.biodiversidad.gob.mx/diversidad/alimentos/maices/razas-de-maiz", "Maíces")
+                          )
+                                                 )
+               ),
+ 
                br(),
+                                       
                imageOutput("preImage", height = 500, width = 500
-                           ), 
+                           ),
               br(),
               br(),
               br(),
@@ -642,28 +650,29 @@ dashboardPagePlus(
         ),
         br(),
         fluidRow(
-          widgetUserBox(
-            title = h4("Alejandro Ponce-Mendoza"),
-            subtitle = "Experto para el Análisis de Información de Agrobiodiversidad",
-            width = 4,
-            type = 2,
-            src = "APM.jpeg",
-            color = "yellow",
-            h5(
-              "Trabajo en la",
+          userBox(
+              title = userDescription(
+                  title="Alejandro Ponce-Mendoza",
+                  subtitle="Experto para el Análisis de Información de Agrobiodiversidad",
+                  image="APM.jpeg",
+                  type=2
+              ),
+              status="warning",
+              width = 4,
+      #       src = "APM.jpeg",
+              h5(
+                "Trabajo en la",
               tags$a(href = "http://www.conabio.gob.mx/web/conocenos/CGAyRB_CPAM.html", "Conabio"),
-              "para conservación de la agrobiodiversidad. Me interesa la visualización y análisis,
-                                 de datos ecológicos. Mis publicaciones las puedes encontrar",
+               "para conservación de la agrobiodiversidad. Me interesa la visualización y análisis, de datos ecológicos. Mis publicaciones las puedes encontrar",
               tags$a(href = "https://scholar.google.com/citations?user=M1i6_loAAAAJ&hl=en", "aquí")
-            ),
-            footer = socialButton(url = "https://github.com/APonce73",
-                                  type = "github"),
+              ),
+            footer = socialButton(href = "https://github.com/APonce73",
+                                  icon = icon("github")),
             tags$a(href = "http://www.conabio.gob.mx/web/conocenos/CGAyRB_CPAM.html", "Conabio")
-            
           )
-          
+
         ) #close fluidRow
-        
+      #   
       ) # close about page
       
     )
