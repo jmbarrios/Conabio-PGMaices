@@ -5,7 +5,7 @@ library(plyr)
 library(tidyverse)
 library(readxl)
 
-TableP <- read_excel("PGM_update2017.xlsx", sheet = "PGM_maices_Alex", col_names = T)
+TableP <- read_excel("./data/PGM_update2017.xlsx", sheet = "PGM_maices_Alex", col_names = T)
 
 TTabla <- TableP %>%
   dplyr::filter(!is.na(Raza_primaria)) %>%
@@ -142,7 +142,7 @@ TablaPP <- TableL %>%
 
 
 # Cargar los datos de Teocintle
-Teocintle <- read.csv("Teocintle.csv", header = T, sep = ",")
+Teocintle <- read.csv("./data/Teocintle.csv", header = T, sep = ",")
 
 Teocintle <- Teocintle %>%
   filter(!is.na(Latitud)) %>%
@@ -153,7 +153,7 @@ names(Teocintle)[16] <- c("latitude")
 names(Teocintle)[14] <- c("Altitud")
 
 # Cargar los datos de Teocintle
-Tripsacum <- read.delim("Tripsacum.csv", header = T, sep = ",")
+Tripsacum <- read.delim("./data/Tripsacum.csv", header = T, sep = ",")
 Tripsacum <- Tripsacum %>%
   dplyr::filter(!is.na(Latitud)) %>%
   distinct()
@@ -168,7 +168,7 @@ Teocintle <- Teocintle %>%
 Parientes <- rbind(Tripsacum, Teocintle)
 
 
-Anexo6 <- read.csv("Anexo6_InfoMaices.csv", header = T, sep = ",")
+Anexo6 <- read.csv("./data/Anexo6_InfoMaices.csv", header = T, sep = ",")
 Anexo6$Raza_Primaria <- as.character(Anexo6$Raza_Primaria)
 
 
@@ -214,7 +214,7 @@ Mex9 <- Mex6 %>%
   arrange(minimo) %>%
   mutate(ordenar1 = minimo)
 
-Size1 <- read.delim("RawData.csv", header = T, sep = ",", quote = "", fill = F) %>%
+Size1 <- read.delim("./data/RawData.csv", header = T, sep = ",", quote = "", fill = F) %>%
   select(Raza_primaria, Longitud_de_mazorca) %>%
   rename("Longitud" = Longitud_de_mazorca) %>%
   rename("Raza" = Raza_primaria) %>%
