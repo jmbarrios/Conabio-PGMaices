@@ -255,7 +255,7 @@ dashboardPage(
           checkboxGroupInput(
             inputId = "Tipo",
             label = h6("Parientes Silvestres:"),
-            choices = levels(Parientes$Tipo),
+            choices = unique(Parientes$Tipo),
             selected = NULL
           )
         )
