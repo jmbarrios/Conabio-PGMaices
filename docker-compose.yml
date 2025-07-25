@@ -1,7 +1,7 @@
 services:
   app:
     build: .  
-    working_dir: /srv/app
+    working_dir: /srv/shiny-server
     ports:
       - "${PGMAICES_EXTERNAL_PORT:-3838}:3838"  
 
